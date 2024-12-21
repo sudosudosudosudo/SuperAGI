@@ -3,6 +3,8 @@ FROM python:3.10-slim-bullseye AS compile-image
 WORKDIR /app
 
 RUN apt-get update && \
+    git add package-lock.json && \
+    git commit -m "Add package manager lockfile" && \
     apt-get install --no-install-recommends -y wget libpq-dev gcc g++ && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
