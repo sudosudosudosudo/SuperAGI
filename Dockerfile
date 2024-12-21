@@ -1,7 +1,16 @@
 # Stage 1: Compile image
 FROM python:3.10-slim-bullseye AS compile-image
 FROM python:3.10-slim-bullseye
+
+# Install git
+RUN apt-get update && \
+    apt-get install -y git
+
 WORKDIR /app
+
+# Use RUN to execute git commands
+RUN git add package-lock.json && \
+    git commit -m "Add package manager lockfile"
 
 
 # Install git (and any other packages)
@@ -9,8 +18,6 @@ RUN apt-get update && \
     apt-get install -y git wget libpq-dev gcc g++ && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-    git add package-lock.json && \
-    git commit -m "Add package manager lockfile" && \
     apt-get install --no-install-recommends -y wget libpq-dev gcc g++ && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
