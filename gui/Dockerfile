@@ -1,6 +1,16 @@
 FROM node:18-alpine AS deps
-RUN apk add --no-cache libc6-compat
+FROM python:3.10-slim-bullseye
+
+# Install git
+RUN apt-get update && \
+    apt-get install -y git
+
 WORKDIR /app
+
+# Use RUN to execute git commands
+RUN git add package-lock.json && \
+    git commit -m "Add package manager lockfile" && \
+    apk add --no-cache libc6-compat
 COPY package.json package-lock.json ./
 RUN npm ci
 
