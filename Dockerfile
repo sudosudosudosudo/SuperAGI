@@ -9,9 +9,7 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Use RUN to execute git commands
-RUN git add package-lock.json && \
-    git commit -m "Add package manager lockfile" && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install -y git wget libpq-dev gcc g++ && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
