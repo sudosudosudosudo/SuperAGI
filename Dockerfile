@@ -10,17 +10,12 @@ WORKDIR /app
 
 # Use RUN to execute git commands
 RUN git add package-lock.json && \
-    git commit -m "Add package manager lockfile"
-
-
-# Install git (and any other packages)
-RUN apt-get update && \
+    git commit -m "Add package manager lockfile" && \
+    apt-get update && \
     apt-get install -y git wget libpq-dev gcc g++ && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
     apt-get install --no-install-recommends -y wget libpq-dev gcc g++ && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
